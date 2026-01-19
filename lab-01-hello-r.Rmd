@@ -4,8 +4,8 @@ author: "Cynthia Deng"
 date: "01-18-2026"
 output: 
   html_document: 
-    fig_height: 4
-    fig_width: 9
+    highlight: zenburn
+    fig_width: 5
 ---
 
 ## Load packages and data
@@ -61,7 +61,7 @@ dino_data %>%
 1. Filter dataset = 'star' from the large datasaurus_dozen data frame. Save the filtered result to a new data frame called star_data. code adapted from the {r plot-dino} code chunk.
 2. Use ggplot to create a scatterplot of the x and y variabels from the star_data data frame
 
-```{r plot-star}
+```{r plot-star, fig.height=4, fig.width=5}
 star_data <- datasaurus_dozen %>%
   filter(dataset == "star")
 
@@ -119,3 +119,5 @@ datasaurus_dozen %>%
 ```
 2. We calculate the Pearson correlation between x and y for each dataset. We used groupby to group the data by the dataset variable. As we can see the printed tibble, the correlations are very similar across the 13 different data frames, although their plots were very different.
 
+Additional to-dos:
+changed syntax highlighting to zenburn, changed the figure size to height =7, weight = 7 in Output Options, changed figure size for star plot to fig.height=4, fig.width=5.
