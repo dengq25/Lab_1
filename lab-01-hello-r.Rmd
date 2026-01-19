@@ -1,7 +1,7 @@
 ---
 title: "Lab 01 - Hello R"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Cynthia Deng"
+date: "01-18-2026"
 output: 
   html_document: 
     fig_height: 4
@@ -19,8 +19,17 @@ data("datasaurus_dozen")
 ## Exercises
 
 ### Exercise 1
+```{r}
+data("datasaurus_dozen")
 
-Remove this text, and add your answer for Exercise 1 here.
+datasaurus_dozen %>%
+  count(dataset) %>%
+  print()
+glimpse(datasaurus_dozen)
+
+```
+
+The datasaurus_dozen file has 1846 rows and 3 columns. The three variables are dataset, x, and y.
 
 ### Exercise 2
 
@@ -42,39 +51,52 @@ Next, let's calculate the correlation between `x` and `y` in this dataset:
 dino_data %>%
   summarize(r = cor(x, y))
 ```
-Once you’ve cleaned up the text, add your own explanation or observations here!
+1. The datasaurus_dozen dataframe that contains 13 datasets, we first use filter to find the rows where dataset = 'dino_data' and saved them in a new data frame called dino_data.
+2. We used ggplot to create a scatterplot of the x and y variabels from the dino_data data frame.
+3. We used cor (x, y) to calculate the Pearson correlation between x and y variables in dino_data. We assigned the correlation we calculated to a variable named r and presented the correlation in a tibble.
 
 
 ### Exercise 3
 
-This is your turn to write the code and narrative for the star dataset. Follow the same steps as above to complete the analysis. Don't forget to label your chunks appropriately!
-
-Note that the R chunks are labeled with `plot-star` and `cor-star` to provide spaces to place the code for plotting and calculating the correlation coefficient.
-To finish, clean up the narrative by removing these instructions.
+1. Filter dataset = 'star' from the large datasaurus_dozen data frame. Save the filtered result to a new data frame called star_data. code adapted from the {r plot-dino} code chunk.
+2. Use ggplot to create a scatterplot of the x and y variabels from the star_data data frame
 
 ```{r plot-star}
+star_data <- datasaurus_dozen %>%
+  filter(dataset == "star")
 
+ggplot(data = star_data, mapping = aes(x = x, y = y)) +
+  geom_point()
 ```
 
-I'm some filler text, you should replace me with more meaningful text...
+calculate correlation for star_data. Code adapted from sample code for dino_data
 
 ```{r cor-star}
-
+star_data %>%
+  summarize(r = cor(x, y))
 ```
-Add your explanation here—what did you notice?
+The correlation for the star dataset is −0.0629611, and the correlation for the dino dataset is −0.06447185. Both correlations are very weak (close to 0) . But the correlation for dino is slightly stronger than correlation for star.
 
 
 ### Exercise 4
+1. edited the name of the code chunk to plot-circle and cor-circle to make it easier to see the purpose of each code chunk.
+2. Filter dataset = 'circle' from the large datasaurus_dozen data frame. Save the filtered result to a new data frame called star_data. code adapted from the {r plot-dino} code chunk.
+3. Use ggplot to create a scatterplot of the x and y variabels from the circle_data data frame.
 
-Add your code and narrative to complete this exercise. Use the conventions from the previous exercises to name your chunks and organize your work.
+```{r plot-circle}
+circle_data <- datasaurus_dozen %>%
+  filter(dataset == "circle")
 
-```{r}
-
+ggplot(data = circle_data, mapping = aes(x = x, y = y)) +
+  geom_point()
 ```
 
-```{r}
-
+```{r cor-circle}
+circle_data %>%
+  summarize(r = cor(x, y))
 ```
+4. calculate correlation for circle_data. Code adapted from sample code for dino_data.
+The correlation for the circle dataset is -0.06834336	, and the correlation for the dino dataset is −0.06447185. The correlation for dino is slightly weaker than correlation for circle.
 
 ### Exercise 5
 
@@ -82,5 +104,18 @@ This is your final exercise! Add code and narrative as needed. Be creative and s
 Add code and narrative as needed.
 
 To add additional R chunks, you can either type the backticks, curly braces, and the letter `r`, or use the "Insert Chunk" button above (the green C+ icon). Have fun!
-
+```{r}
+ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset)) +
+  geom_point() +
+  facet_wrap(~dataset, ncol = 3) +
+  theme(legend.position = "none")
+```
+1.We used ggplot to create scatterplots of x and y for all datasets in datasaurus_dozen. The data are faceted by dataset, so that each dataset appears in its own panel.
+```{r}
+datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarize(r = cor(x, y)) %>%
+  print(13, width = Inf)
+```
+2. We calculate the Pearson correlation between x and y for each dataset. We used groupby to group the data by the dataset variable. As we can see the printed tibble, the correlations are very similar across the 13 different data frames, although their plots were very different.
 
